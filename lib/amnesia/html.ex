@@ -12,7 +12,7 @@ if Code.ensure_loaded?(Phoenix.HTML) do
         id: name,
         name: name,
         errors: form_for_errors(changeset.errors),
-        model: model,
+        data: model,
         params: params || %{},
         hidden: form_for_hidden(model),
         options: Keyword.put_new(opts, :method, form_for_method(model))
