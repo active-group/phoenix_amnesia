@@ -5,9 +5,9 @@ defmodule PhoenixAmnesia.Mixfile do
     [app: :phoenix_amnesia,
      version: "0.1.0",
      elixir: "~> 1.2",
-     deps: deps,
+     deps: deps(),
      description: "Integrates Phoenix with Amnesia providing an Ecto-like interface",
-     package: package]
+     package: package()]
   end
 
   def application do
