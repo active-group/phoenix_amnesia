@@ -95,7 +95,23 @@ if Code.ensure_loaded?(Phoenix.HTML) do
       end
     end
 
-    def input_type(changeset, field) do
+    def input_value(%{changes: changes, data: data}, %{params: params}, field, computed \\ nil) do
+      case Map.fetch(changes, field) do
+        {:ok, value} ->
+          value
+        :error ->
+          case Map.fetch(params, Atom.to_string(field)) do
+            {:ok, value} ->
+              value
+            :error when is_nil(computed) ->
+              Map.get(data, field)
+            :error ->
+              computed
+          end
+      end
+    end
+
+    def input_type(changeset, _, field) do
       type = Map.get(changeset.types, field, :string)
       type = type.type
 
@@ -111,7 +127,7 @@ if Code.ensure_loaded?(Phoenix.HTML) do
       end
     end
 
-    def input_validations(changeset, field) do
+    def input_validations(changeset, _, field) do
       [required: field in changeset.required] ++
         for({key, validation} <- changeset.validations,
             key == field,
@@ -220,7 +236,7 @@ if Code.ensure_loaded?(Phoenix.HTML) do
       raise ArgumentError, "expected #{what} to be a map/struct, got: #{inspect value}"
     end
 
-    defp form_for_hidden(model) do
+    defp form_for_hidden(_model) do
       #for {k, v} <- Ecto.Model.primary_key(model), v != nil, do: {k, v}
       # a keyword list of fields that are required for submitting the form behind the scenes as hidden inputs. This information will be used by upcoming nested forms
       []

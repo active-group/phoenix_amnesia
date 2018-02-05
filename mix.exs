@@ -16,7 +16,8 @@ defmodule PhoenixAmnesia.Mixfile do
 
   defp deps do
     [{:phoenix_html, "~> 2.5", optional: true},
-     {:amnesia, "~> 0.2"}]
+     {:amnesia, github: "meh/amnesia", ref: "1a68e0d31401d0e7e60375b07d4ac9cf4cdf5ebd", override: true},
+     {:decimal, optional: true}]
   end
 
   defp package do

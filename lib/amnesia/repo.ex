@@ -43,10 +43,10 @@ defmodule Amnesia.Repo do
     raise Amnesia.MultipleResultsError, count: length(other)
   end
 
-  defp inserted_stamp(%{inserted_at: _} = model), do: %{model | inserted_at: timestamp}
+  defp inserted_stamp(%{inserted_at: _} = model), do: %{model | inserted_at: timestamp()}
   defp inserted_stamp(model), do: model
 
-  defp updated_stamp(%{updated_at: _} = model), do: %{model | updated_at: timestamp}
+  defp updated_stamp(%{updated_at: _} = model), do: %{model | updated_at: timestamp()}
   defp updated_stamp(model), do: model
 
   def timestamp, do: :os.system_time(:seconds)
